@@ -3,7 +3,7 @@ const container = document.querySelector('.container');
 const loadingSpinner = () => {
   const loadingDiv = document.createElement('img');
   loadingDiv.className = 'loading';
-  loadingDiv.src = '<https://i.gifer.com/7plQ.gif>';
+  loadingDiv.src = 'https://i.gifer.com/7plQ.gif';
   container.append(loadingDiv);
 };
 
@@ -29,6 +29,26 @@ async function loadImages(numImages = 9) {
 
 loadImages();
 
+const throttle = (callback, limit) => {
+  let lastFun;
+  let lastRan;
+  return function () {
+    const args = arguments;
+    if (!lastRan) {
+      callback(...args);
+      lastRan = Date.now();
+    } else {
+      clearTimeout(lastFun);
+      lastFun = setTimeout(function () {
+        if (Date.now() - lastRan >= limit) {
+          callback(...args);
+          lastRan = Date.now();
+        }
+      }, limit - (Date.now() - lastRan));
+    }
+  };
+};
+
 const handleScroll = () => {
   if (window.innerHeight + window.scrollY >= container.scrollHeight) {
     console.log('Loading more images');
@@ -36,4 +56,4 @@ const handleScroll = () => {
   }
 };
 
-window.addEventListener('scroll', handleScroll);
+window.addEventListener('scroll', throttle(handleScroll, 2000));
