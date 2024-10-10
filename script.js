@@ -19,6 +19,7 @@ async function loadImages(numImages = 9) {
       document.querySelector('.loading').remove();
 
       const image = document.createElement('img');
+      image.loading = 'lazy';
       image.src = data.message;
       container.appendChild(image);
     } catch (error) {
