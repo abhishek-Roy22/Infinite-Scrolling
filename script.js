@@ -13,7 +13,7 @@ async function loadImages(numImages = 9) {
       // Show loading spinner before fetching
       loadingSpinner();
 
-      const res = await fetch('<https://dog.ceo/api/breeds/image/random>');
+      const res = await fetch('https://dog.ceo/api/breeds/image/random');
       const data = await res.json();
       // Remove loading spinner after fetching
       document.querySelector('.loading').remove();
